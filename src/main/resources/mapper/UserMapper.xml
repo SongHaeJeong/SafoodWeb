@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.safood.mapper.UserMapper">
+
+	<resultMap type="User" id="userResult">
+		<result column="id" property="id"/>
+		<result column="pass" property="pass"/>
+		<result column="name" property="name"/>
+		<result column="email" property="email"/>		
+	</resultMap>
+	
+	<resultMap type="Food" id="foodResult">
+		<result column="code" property="code"/>
+		<result column="name" property="name"/>
+		<result column="supportpereat" property="supportpereat"/>
+		<result column="calory" property="calory"/>
+		<result column="carbo" property="carbo"/>
+		<result column="protein" property="protein"/>
+		<result column="fat" property="fat"/>
+		<result column="sugar" property="sugar"/>
+		<result column="natrium" property="natrium"/>
+		<result column="chole" property="chole"/>
+		<result column="fattyacid" property="fattyacid"/>
+		<result column="transfat" property="transfat"/>
+		<result column="maker" property="maker"/>
+		<result column="material" property="material"/>
+		<result column="img" property="img"/>
+	</resultMap>
+	
+	
+	<insert id="userAdd" parameterType="String">
+		insert into user values(#{id}, #{pass}, #{name}, #{email})
+	</insert>
+	
+	<update id="userUpdate" parameterType="User">
+		update user set pass =#{pass} , name = #{name} , email = #{email} where id = #{id}
+	</update>
+	
+	<delete id="userDelete" parameterType="String">
+		delete from user where id = #{id}
+	</delete>
+	
+	<select id="userLogin" resultType="int">
+		select count(*) from user where id = #{param1} and pass = #{param2}
+	</select>
+	
+	<select id ="userConfirm" resultMap="userResult" parameterType="String">
+		select * from user where id = #{id}
+	</select>
+	
+	<select id="getEatenFoodList" resultMap="foodResult" parameterType="String">
+		select * from food f , foodlog l where f.code = l.food_code and user_id=#{param1}
+	</select>
+	
+	<select id="getWishFoodList" resultMap="foodResult" parameterType="String">
+		select * from food f , wishfood w where f.code = w.food_code and user_id=#{param1}
+	</select>
+	
+	<insert id="addAllergy" parameterType="String">
+		insert into user_has_allergy values(null, #{param1} , #{param2});
+	</insert>
+	
+	<delete id="deleteAllergy" parameterType="String">
+		delete from user_has_allergy where id = #{id}
+	</delete>
+	
+	<select id="getAllergyList" parameterType="String" resultType="Allergy">
+		select distinct a.name name from user_has_allergy u ,allergy a where u.allergy_aid = a.aid and u.user_id = #{param1} ;
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,185 @@
+.search {
+    text-align: center;
+    display: flex;
+    padding: 30px 120px;
+}
+
+.searchtxt {
+    flex-grow: 80;
+}
+.searchtxt input[type=text] {
+    height: 50px;
+}
+
+.searchbtn {
+    flex-grow: 10;
+}
+.searchbtn .btn{
+    height: 50px;
+    width: 100%;
+}
+
+#foodListMain > div.row{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 3600px;
+}
+
+/* ================= FOOD CARD =============== */
+.food_card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0px 7px 15px 0px grey;
+}
+.food_card .info_row {
+    display: flex;
+    width: 100%;
+}
+.info_row .food_thumbnail {
+    width: 40%;
+    height: 40%;
+}
+.info_row .infos {
+    width: 60%;
+}
+.infos h2 {
+    text-align: center;
+
+}
+.infos .nutri_summary {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.infos .tags {
+    text-align: center;
+}
+.infos .tag {
+    display: inline-block;;
+    border-radius: 30px;
+    margin: 4px;
+    padding: 3px 12px;
+    background: lightgreen;
+}
+.tag.high {
+    background: lightpink;
+}
+
+.food_card hr {
+    border-top: 2px solid lightblue;
+}
+
+.buttons_row {
+    display: flex;
+}
+.buttons_row a {
+    flex-grow: 1;
+    border-radius: 10px;
+    margin: 0 10px;
+}
+
+
+
+/* ================== MODAL ================== */
+.modal-wrapper {
+    text-align: center;
+    vertical-align: middle;
+    padding: 70px;
+}
+
+#modalChart {
+    height: 200px;
+    width: 200px;
+    display: inline-block;
+}
+.modal-body .images {
+    display: inline;
+}
+
+.modal-wrapper img {
+    width: 200px;
+    padding: 20px 0;
+}
+
+.modal-wrapper img.productImg {
+    float: left;
+}
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+}
+
+.modal-container {
+  width: 80%;
+  max-height: 80vh;
+  overflow-y: auto;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  transition: all .3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+
+.modal-body {
+  margin: 20px 0;
+}
+
+/* modal transition */
+.modal-enter {
+  opacity: 0;
+}
+.modal-leave-active {
+  opacity: 0;
+}
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.charts {
+    display: flex;
+    justify-content: space-evenly;
+}
+.chartContainer {
+    width: 300px;
+    height: 300px;
+}
+
+.conditions_container {
+    display: flex;
+    align-items: flex-end;
+}
+
+.conditions_container legend {
+    font-size: 10pt;
+}
+
+.conditions_container input[type=button] {
+    align-self: stretch;
+}
+
+#searchLog {
+    background:white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 5px 8px 0px grey;
+}
+
+[v-cloak] {
+    display: none;
+}

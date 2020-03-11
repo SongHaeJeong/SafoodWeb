@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.safood.mapper.FoodMapper">
+	<resultMap type="Food" id="foodResult">
+		<result column="code" property="code"/>
+		<result column="name" property="name"/>
+		<result column="supportpereat" property="supportpereat"/>
+		<result column="calory" property="calory"/>
+		<result column="carbo" property="carbo"/>
+		<result column="protein" property="protein"/>
+		<result column="fat" property="fat"/>
+		<result column="sugar" property="sugar"/>
+		<result column="natrium" property="natrium"/>
+		<result column="chole" property="chole"/>
+		<result column="fattyacid" property="fattyacid"/>
+		<result column="transfat" property="transfat"/>
+		<result column="maker" property="maker"/>
+		<result column="material" property="material"/>
+		<result column="img" property="img"/>		
+	</resultMap>
+	
+    <select id="searchAllByPage" parameterType="int" resultMap="foodResult">
+        select * from food order by code limit #{param1}, #{param2}
+    </select> 
+	<select id="searchAll" resultMap="foodResult">
+		select * from food order by code
+	</select>
+	
+	<select id="searchCode" parameterType="String" resultMap="foodResult">
+		select * from food where code = #{code}
+	</select>
+	
+	<select id="searchName" resultMap="foodResult">
+		select * from food where name like #{name}
+	</select>
+	
+	<select id="detailSearch" resultType="Food" parameterType="String">
+		select * from food where calory between #{param1} and #{param2} 
+		and carbo between #{param3} and #{param4}
+		and protein between #{param5} and #{param6} 
+		and fat between #{param7} and #{param8} 
+		and sugar between #{param9} and #{param10} 
+		and natrium between #{param11} and #{param12}
+		and chole between #{param13} and #{param14} 
+		and fattyacid between #{param15} and #{param16}
+		and transfat between #{param17} and #{param18} 
+		and name like #{param19}
+	</select>
+	
+	<select id="searchMaker" resultMap="foodResult">
+		select * from food where maker like #{maker}
+	</select>
+	
+	<select id="searchMaterial" resultMap="foodResult">
+		select * from food where maker material #{material}
+	</select>
+	
+	<insert id="insertFoodLog" parameterType="String">
+		insert into foodlog values(null, #{param1} ,#{param2} )
+	</insert>
+	
+	<insert id="insertWishFood" parameterType="String">
+		insert into wishfood values(null, #{param1} ,#{param2} )
+	</insert>
+	
+	<delete id="deleteWishFood" parameterType="String">
+		delete from wishfood where wishfoodid = #{param1}
+	</delete>
+    
+	<delete id="deleteEatenFood" parameterType="String">
+		delete from foodlog where foodlogid = #{param1}
+	</delete>
+	
+	<insert id="insertSearchLog" parameterType="String">
+		insert into searchlog values ( null,sysdate(), #{param1}, #{param2} )
+	</insert>
+	
+	<select id="searchLog" resultType ="String">
+	select keyword from  (select count(*) searchCount , keyword  from searchlog group by keyword) searchRank order by searchCount desc;
+	</select>
+	
+	<select id="searchLowCal" parameterType="String" resultType="Food">
+		select * from food where calory &lt; #{param2} and name like #{param1}
+	</select>
+	
+	<select id="bestEaten" parameterType="String" resultType="Pair">
+		select name first ,cnt second from  (select count(*) cnt, f.name from food f, foodlog l where f.code=l.food_code and user_id=#{userid} group by l.food_code ) eatenRank order by cnt desc;
+	</select>
+	<select id="bestAllEaten"  resultType="Pair">
+		select name first , cnt second from  (select count(*) cnt, f.name from food f, foodlog l where f.code=l.food_code  group by l.food_code ) eatenRank order by cnt desc;
+	</select>
+	
+	<select id="getAllergyList" parameterType="String" resultType="Allergy">
+		select distinct a.name from food_has_allergy f ,allergy a where f.allergy_aid = a.aid and f.food_code = #{param1} 
+	</select>
+	
+	<select id="mainPageSearch" parameterType="hashmap" resultType="Food">
+		
+		select * from food 
+		where code not in (select f.code code from food f, allergy a, food_has_allergy fa		 
+				where a.aid in
+				<foreach collection="allergyId" item="type" index ="index" open="(" close=")" separator=",">
+					#{type}
+				</foreach>
+				 and fa.allergy_aid = a.aid and fa.food_code = f.code) 
+				and calory &lt; #{cal_number} and name like #{keyword};
+	</select>
+	
+	
+	
+</mapper>

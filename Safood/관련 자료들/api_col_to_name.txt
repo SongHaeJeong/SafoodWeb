@@ -1,0 +1,3 @@
+desc_kor	serving_wt	nutr_cont1	nutr_cont2	nutr_cont3	nutr_cont4	nutr_cont5	nutr_cont6	nutr_cont7	nutr_cont8	nutr_cont9	bgn_year	animal_plant
+
+식품이름	1회제공량	열량	탄수화물	단백질	지방	당류	나트륨	콜레스테롤	포화지방산	트랜스지방산	구축년도	가공업체
